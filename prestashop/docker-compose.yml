@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql:
+    container_name: dam_sql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: castelao
+      MYSQL_DATABASE: prestashop
+      MYSQL_USER: admin
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:latest 
+    depends_on:
+      - mysql
+    ports:
+      - 8080:80
+    environment:
+      DB_SERVER: dam_sql
+      DB_NAME: prestashop
+      DB_USER: admin
+      DB_PASSWD: castelao
+networks:
+  prestashop_network:
